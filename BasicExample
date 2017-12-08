@@ -1,0 +1,108 @@
+#This is a basic example I have come up with (w/ a lot of help from the internet)
+#Make sure to put something in Line 82 where query = '', place something in between single quotes
+
+import re
+import tweepy
+from tweepy import OAuthHandler
+from textblob import TextBlob
+
+class TwitterClient(object):
+    #The class that authorizes twitter authorization and searches through twitter feeds
+
+    def __init__(self):
+    #class constructor
+        #keys for authorization in Twitter
+        consumer_key = 'B7nDr1yqRDSuNqkwpGmGCsTvS'
+        consumer_secret = '85Pr4hWAABE1yuUooHVRLgireEVyrUwsGLGIRSsp5LzzTlUzF9'
+        access_token = '	938601013036175360kRnKomxMpgZHPTmVqXyvkhh0bLoSyqx'
+        access_token_secret = 'jF6TsSphX7BHc2lFx1lail43FyexWT3Q2TbRBjUtjfw1a'
+
+        #attempt to authenticate
+        try:
+            #creating an authorization object
+            self.authorize = OAuthHandler(consumer_key, consumer_secret)
+            #set access tokens
+            self.authorize.set_access_token(access_token, access_token_secret)
+            #tweepy API object to retrieve tweets
+            self.api = tweepy.API(self.authorize)
+        except:
+            print("Error: No Authentication")
+
+    def clean_tweet(self, tweet):
+        #remove links, special characters using regex (this took me the longest to understand)
+        return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
+
+    def get_tweet_sentiment(self, tweet):
+        #used TextBlob's sentiment methods to classify
+        #create TextBlob obj
+        analyze = TextBlob(self.clean_tweet(tweet))
+        #setting the sentiment in textblob
+        if analyze.sentiment.polarity > 0:
+            return 'positive'
+        elif analyze.sentiment.polarity == 0:
+            return 'neutral'
+        else:
+            return 'negative'
+
+    def get_tweets(self, query, count = 10):
+        #Fetch and parse method
+        #list to store tweets
+        tweets = []
+
+        try:
+            #fetch tweets through twitter API
+            fetched_tweets = self.api.search(q = query, count = count)
+
+            #parse
+            for tweet in fetched_tweets:
+                parsed_tweet = {}
+
+                #saving text
+                parsed_tweet['text'] = tweet.text
+                #sentiment of tweet
+                parsed_tweet['sentiment'] = self.get_tweet_sentiment(tweet.text)
+
+                #putting parsed tweet to list of tweets
+                if tweet.retweet_count > 0:
+                    #if tweet has been retweeted, only count it onced
+                    if parsed_tweet not in tweets:
+                        tweets.append(parsed_tweet)
+                else:
+                    tweets.append(parsed_tweet)
+            #return the tweet
+            return tweets
+        except tweepy.TweepError as e:
+            #e being an error code (predefined)
+            print("Error: " + str(e))
+
+def main():
+    #create an obj of TwitterClass
+    api = TwitterClient()
+    #call the functions
+    tweets = api.get_tweets(query = '', count = 200)
+
+    # picking positive tweets
+    pos_tweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
+    # percentage of positive tweets
+    print("Positive tweets percentage: {} %".format(100 * len(pos_tweets) / len(tweets)))
+    # picking negative tweets
+    neg_tweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
+    # percentage of negative tweets
+    print("Negative tweets percentage: {} %".format(100 * len(neg_tweets) / len(tweets)))
+    # percentage of neutral tweets
+    print("Neutral tweets percentage: {} % \
+        ".format(100 * len(tweets - neg_tweets - pos_tweets) / len(tweets)))
+
+    #print 5 pos_tweets
+    print("\n\nPositive Tweets:")
+    for tweet in pos_tweets[:10]:
+        print(tweet['text'])
+
+    #print 5 neg_tweets
+    print("\n\nNegative Tweets: ")
+    for tweet in neg_tweets[:10]:
+        print(tweet['text'])
+
+if __name__ == "__main__":
+    #calls main function?
+    main()
