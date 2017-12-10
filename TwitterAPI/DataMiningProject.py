@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sat Dec 09 00:39:06 2017
-
-@author: Ivan Sosa
 """
 
 import re
@@ -112,6 +110,16 @@ def main():
     # percentage of neutral tweets
     print("Neutral tweets percentage: {} % ".format(100*(len(tweets)-len(ntweets)-len(ptweets))/len(tweets)))
  
+     # printing first 5 positive tweets
+    print("\n\nPositive tweets:")
+    for tweet in ptweets[:10]:
+       print(tweet['text'])
+ 
+    # printing first 5 negative tweets
+    print("\n\nNegative tweets:")
+    for tweet in ntweets[:10]:
+        print(tweet['text'])
+      
     print("\n")
     print("Honda tweet percentages")
     tweets = api.get_tweets(query = '#Honda', count = 250)
@@ -127,6 +135,16 @@ def main():
     # percentage of neutral tweets
     print("Neutral tweets percentage: {} % ".format(100*(len(tweets)-len(ntweets)-len(ptweets))/len(tweets)))
     
+        # printing first 5 positive tweets
+    print("\n\nPositive tweets:")
+    for tweet in ptweets[:10]:
+       print(tweet['text'])
+ 
+    # printing first 5 negative tweets
+    print("\n\nNegative tweets:")
+    for tweet in ntweets[:10]:
+        print(tweet['text'])
+      
     print("\n")
     print("Acura tweet percentages")
     tweets = api.get_tweets(query = '#Acura', count = 250)
@@ -142,6 +160,16 @@ def main():
     # percentage of neutral tweets
     print("Neutral tweets percentage: {} % ".format(100*(len(tweets)-len(ntweets)-len(ptweets))/len(tweets)))
     
+        # printing first 5 positive tweets
+    print("\n\nPositive tweets:")
+    for tweet in ptweets[:10]:
+       print(tweet['text'])
+ 
+    # printing first 5 negative tweets
+    print("\n\nNegative tweets:")
+    for tweet in ntweets[:10]:
+        print(tweet['text'])
+      
     print("\n")
     print("BMW tweet percentages")
     tweets = api.get_tweets(query = '#BMW', count = 250)
@@ -157,6 +185,15 @@ def main():
     # percentage of neutral tweets
     print("Neutral tweets percentage: {} % ".format(100*(len(tweets)-len(ntweets)-len(ptweets))/len(tweets)))
     
+        # printing first 5 positive tweets
+    print("\n\nPositive tweets:")
+    for tweet in ptweets[:10]:
+       print(tweet['text'])
+ 
+    # printing first 5 negative tweets
+    print("\n\nNegative tweets:")
+    for tweet in ntweets[:10]:
+        print(tweet['text'])
     
     print("\n")
     print("Jeep tweet percentages")
@@ -173,6 +210,15 @@ def main():
     # percentage of neutral tweets
     print("Neutral tweets percentage: {} % ".format(100*(len(tweets)-len(ntweets)-len(ptweets))/len(tweets)))
     
+    # printing first 5 positive tweets
+    print("\n\nPositive tweets:")
+    for tweet in ptweets[:10]:
+       print(tweet['text'])
+ 
+    # printing first 5 negative tweets
+    print("\n\nNegative tweets:")
+    for tweet in ntweets[:10]:
+        print(tweet['text'])
     
     print("\n")
     print("Chevrolet tweet percentages")
@@ -188,8 +234,7 @@ def main():
     print("Negative tweets percentage: {} %".format(100*len(ntweets)/len(tweets)))
     # percentage of neutral tweets
     print("Neutral tweets percentage: {} % ".format(100*(len(tweets)-len(ntweets)-len(ptweets))/len(tweets)))
-    
-    
+        
     # printing first 5 positive tweets
     print("\n\nPositive tweets:")
     for tweet in ptweets[:10]:
@@ -199,6 +244,35 @@ def main():
     print("\n\nNegative tweets:")
     for tweet in ntweets[:10]:
         print(tweet['text'])
+      
+    per_psum = tp_tweets+hp_tweets+ap_tweets+bp_tweets+jp_tweets+cp_tweets # the sum of all positive tweets for percentage
+    p_labels = 'Toyota', 'Honda', 'Acura', 'BMW', 'Jeep', 'Chevrolet'
+    p_sizes = [((tp_tweets/per_psum)*100), ((hp_tweets/per_psum)*100), ((ap_tweets/per_psum)*100),\
+               ((bp_tweets/per_psum)*100),((jp_tweets/per_psum)*100), ((cp_tweets/per_psum)*100)] #configuring percents
+    
+    per_nsum = tn_tweets+hn_tweets+an_tweets+bn_tweets+jn_tweets+cn_tweets # the sum of all negative tweets for percentage
+    n_labels = 'Toyota', 'Honda', 'Acura', 'BMW', 'Jeep', 'Chevrolet'
+    n_sizes = [((tn_tweets/per_nsum)*100), ((hn_tweets/per_nsum)*100), ((an_tweets/per_nsum)*100),\
+               ((bn_tweets/per_nsum)*100),((jn_tweets/per_nsum)*100), ((cn_tweets/per_nsum)*100)] #configuring percents
+
+    #configuring the settings of the positive pie chart
+    fig1, ax1 = plt.subplots()
+    ax1.pie(p_sizes, labels=p_labels, autopct='%1.1f%%', shadow=True, startangle=0)
+    ax1.axis('equal')
+
+    #the title of the figure1
+    plt.suptitle('Percentage of Overall Positive Tweets')
+
+    #configuring the settings of the positive pie chart
+    fig2, ax2 = plt.subplots()
+    ax2.pie(n_sizes, labels=n_labels, autopct='%1.1f%%', shadow=True, startangle=0)
+    ax2.axis('equal')
+
+    #the title of the figure2
+    plt.suptitle('Percentage of Overall Negative Tweets')
+    plt.show()
+
+ 
  
 if __name__ == "__main__":
     # calling main function
