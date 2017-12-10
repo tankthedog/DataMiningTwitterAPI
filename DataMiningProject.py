@@ -2,7 +2,7 @@
 """
 Created on Sat Dec 09 00:39:06 2017
 
-@author: Ivan Sosa, Brandon Toppass
+@author: Ivan Sosa, Brandon Toppass, Saad Minhas
 """
 
 import re
@@ -226,5 +226,6 @@ def main():
 if __name__ == "__main__":
     # calling main function
     main()
+    
 
 
