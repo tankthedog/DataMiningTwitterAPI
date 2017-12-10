@@ -2,7 +2,7 @@
 """
 Created on Sat Dec 09 00:39:06 2017
 
-@author: Ivan Sosa
+@author: Ivan Sosa n Valeria G
 """
 
 import re
