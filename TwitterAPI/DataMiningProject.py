@@ -10,6 +10,8 @@ import tweepy
 from tweepy import OAuthHandler
 from textblob import TextBlob
 import twitter
+import matplotlib.pyplot as plt 
+
  
 class TwitterClient(object):
     '''
@@ -107,7 +109,7 @@ def main():
     print("Positive tweets percentage: {} %".format(100*len(ptweets)/len(tweets)))
     # picking negative tweets from tweets
     ntweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
-    # percentage of negative tweets
+    # percentage of negative tweets 
     print("Negative tweets percentage: {} %".format(100*len(ntweets)/len(tweets)))
     # percentage of neutral tweets
     print("Neutral tweets percentage: {} % ".format(100*(len(tweets)-len(ntweets)-len(ptweets))/len(tweets)))
@@ -126,6 +128,8 @@ def main():
     print("Negative tweets percentage: {} %".format(100*len(ntweets)/len(tweets)))
     # percentage of neutral tweets
     print("Neutral tweets percentage: {} % ".format(100*(len(tweets)-len(ntweets)-len(ptweets))/len(tweets)))
+    hp_tweet = len(ptweets)
+    hn_tweet = len(ntweets)
     
     print("\n")
     print("Acura tweet percentages")
@@ -141,6 +145,8 @@ def main():
     print("Negative tweets percentage: {} %".format(100*len(ntweets)/len(tweets)))
     # percentage of neutral tweets
     print("Neutral tweets percentage: {} % ".format(100*(len(tweets)-len(ntweets)-len(ptweets))/len(tweets)))
+    ap_tweets = len(ptweets)
+    an_tweets = len(ntweets)
     
     print("\n")
     print("BMW tweet percentages")
@@ -156,6 +162,8 @@ def main():
     print("Negative tweets percentage: {} %".format(100*len(ntweets)/len(tweets)))
     # percentage of neutral tweets
     print("Neutral tweets percentage: {} % ".format(100*(len(tweets)-len(ntweets)-len(ptweets))/len(tweets)))
+    bp_tweets = len(ptweets)
+    bn_tweets = len(ntweets)
     
     
     print("\n")
@@ -172,7 +180,8 @@ def main():
     print("Negative tweets percentage: {} %".format(100*len(ntweets)/len(tweets)))
     # percentage of neutral tweets
     print("Neutral tweets percentage: {} % ".format(100*(len(tweets)-len(ntweets)-len(ptweets))/len(tweets)))
-    
+    jp_tweets = len(ptweets)
+    jn_tweets = len(ntweets)
     
     print("\n")
     print("Chevrolet tweet percentages")
@@ -188,7 +197,12 @@ def main():
     print("Negative tweets percentage: {} %".format(100*len(ntweets)/len(tweets)))
     # percentage of neutral tweets
     print("Neutral tweets percentage: {} % ".format(100*(len(tweets)-len(ntweets)-len(ptweets))/len(tweets)))
+    cp_tweets = len(ptweets)
+    cn_tweets = len(ntweets)
     
+    #creating the pie chart
+    labels = 'Toyota', 'Honda', 'Acura', 'BMW', 'Jeep', 'Chevrolet'
+    sizes [tp_tweets, hp_tweets, ap_tweets, bp_tweets, jp_tweets, cp_tweets]
     
     # printing first 5 positive tweets
     print("\n\nPositive tweets:")
