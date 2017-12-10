@@ -200,9 +200,16 @@ def main():
     cp_tweets = len(ptweets)
     cn_tweets = len(ntweets)
     
-    #creating the pie chart
+    #creating the pie chart positive 
+    p_sum = tp_tweets + hp_tweets + ap_tweets + bp_tweets + jp_tweets + cp_tweets
     labels = 'Toyota', 'Honda', 'Acura', 'BMW', 'Jeep', 'Chevrolet'
-    sizes [tp_tweets, hp_tweets, ap_tweets, bp_tweets, jp_tweets, cp_tweets]
+    sizes = [((100*tp_tweets)/p_sum), ((100*hp_tweets)/p_sum), ((100*ap_tweets)/p_sum), ((100*bp_tweets)/p_sum), ((100*jp_tweets)/p_sum), ((100*cp_tweets)/p_sum)]
+    
+    #creating the pie chart negative
+    p_sum = tn_tweets + hn_tweets + an_tweets + bn_tweets + jn_tweets + cn_tweets
+    labels = 'Toyota', 'Honda', 'Acura', 'BMW', 'Jeep', 'Chevrolet'
+    sizes = [((100*tn_tweets)/p_sum), ((100*hn_tweets)/p_sum), ((100*an_tweets)/p_sum), ((100*bn_tweets)/p_sum), ((100*jn_tweets)/p_sum), ((100*cn_tweets)/p_sum)]
+     
     
     # printing first 5 positive tweets
     print("\n\nPositive tweets:")
